@@ -11,25 +11,66 @@ class ItemWidget extends StatelessWidget {
     required this.aoMudarStatus,
   });
 
+  // Função auxiliar para definir a cor baseada na categoria
+  Color _obterCorCategoria(String categoria) {
+    switch (categoria) {
+      case 'Carne':
+        return Colors.redAccent;
+      case 'Bebida':
+        return Colors.blueAccent;
+      default:
+        return Colors.orangeAccent;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final corCategoria = _obterCorCategoria(item.categoria);
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       elevation: 2,
-      child: ListTile(
-        title: Text(
-          item.nome,
-          style: TextStyle(
-            fontSize: 18,
-            decoration: item.foiComprado ? TextDecoration.lineThrough : null,
-            color: item.foiComprado ? Colors.grey : Colors.black87,
+      child: Container(
+        // Adiciona uma linha colorida fina na lateral esquerda do card indicando a categoria
+        decoration: BoxDecoration(
+          border: Border(
+            left: BorderSide(color: corCategoria, width: 5),
           ),
         ),
-        subtitle: Text('Quantidade: ${item.quantidade}'),
-        trailing: Checkbox(
-          activeColor: Colors.redAccent,
-          value: item.foiComprado,
-          onChanged: (_) => aoMudarStatus(),
+        child: ListTile(
+          title: Text(
+            item.nome,
+            style: TextStyle(
+              fontSize: 18,
+              decoration: item.foiComprado ? TextDecoration.lineThrough : null,
+              color: item.foiComprado ? Colors.grey : Colors.black87,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          subtitle: Row(
+            children: [
+              Text('Qtd: ${item.quantidade}'),
+              const SizedBox(width: 10),
+              // Mostra uma etiqueta (Chip) com o nome da categoria
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                decoration: BoxDecoration(
+                  // CORRIGIDO: Uso do .withValues para evitar avisos de depreciação
+                  color: corCategoria.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Text(
+                  item.categoria,
+                  style: TextStyle(color: corCategoria, fontSize: 11, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+          trailing: Checkbox(
+            activeColor: Colors.redAccent,
+            value: item.foiComprado,
+            onChanged: (_) => aoMudarStatus(),
+          ),
         ),
       ),
     );
