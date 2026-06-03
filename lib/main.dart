@@ -12,12 +12,12 @@ class MeuChurrascoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'App de Churrasco',
-      debugShowCheckedModeBanner: false, // Tira a faixa de "Debug"
+      debugShowCheckedModeBanner: false, 
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.redAccent),
         useMaterial3: true,
       ),
-      // A primeira tela que o aplicativo vai abrir!
+
       home: const ListaComprasScreen(),
     );
   }

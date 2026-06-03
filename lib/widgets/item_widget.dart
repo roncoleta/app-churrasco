@@ -31,7 +31,6 @@ class ItemWidget extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       elevation: 2,
       child: Container(
-        // Adiciona uma linha colorida fina na lateral esquerda do card indicando a categoria
         decoration: BoxDecoration(
           border: Border(
             left: BorderSide(color: corCategoria, width: 5),
@@ -51,11 +50,9 @@ class ItemWidget extends StatelessWidget {
             children: [
               Text('Qtd: ${item.quantidade}'),
               const SizedBox(width: 10),
-              // Mostra uma etiqueta (Chip) com o nome da categoria
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
-                  // CORRIGIDO: Uso do .withValues para evitar avisos de depreciação
                   color: corCategoria.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(5),
                 ),

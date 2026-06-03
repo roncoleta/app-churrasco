@@ -10,20 +10,19 @@ class ListaComprasScreen extends StatefulWidget {
 }
 
 class _ListaComprasScreenState extends State<ListaComprasScreen> {
-  // Banco de dados inicial em memória com as categorias
+  // Banco de dados inicial na memoria
   final List<ItemCompra> _meusItens = [
     ItemCompra(id: '1', nome: 'Picanha', quantidade: 2, categoria: 'Carne'),
     ItemCompra(id: '2', nome: 'Pão de Alho', quantidade: 3, categoria: 'Outro'),
     ItemCompra(id: '3', nome: 'Saco de Carvão', quantidade: 1, categoria: 'Outro'),
   ];
 
-  // Estado para controlar qual filtro de botões está ativo
+  //Botões ativos
   String _filtroAtivo = 'Todos';
 
   final _nomeController = TextEditingController();
   final _qtdController = TextEditingController();
   
-  // Variáveis para controlar a funcionalidade de Categorias e Validação
   String _categoriaSelecionada = 'Carne';
   String? _erroNome;
   String? _erroQtd;
@@ -32,7 +31,6 @@ class _ListaComprasScreenState extends State<ListaComprasScreen> {
   List<ItemCompra> get _itensExibidos {
     List<ItemCompra> listaFiltrada = [];
 
-    // 1. Aplica o filtro dos botões (Chips)
     if (_filtroAtivo == 'Todos') {
       listaFiltrada = List.from(_meusItens);
     } else if (_filtroAtivo == 'Pendentes') {
@@ -41,7 +39,6 @@ class _ListaComprasScreenState extends State<ListaComprasScreen> {
       listaFiltrada = _meusItens.where((item) => item.foiComprado).toList();
     }
 
-    // 2. Ordenação automática (itens marcados descem)
     listaFiltrada.sort((a, b) {
       if (a.foiComprado && !b.foiComprado) return 1;
       if (!a.foiComprado && b.foiComprado) return -1;
@@ -256,7 +253,7 @@ class _ListaComprasScreenState extends State<ListaComprasScreen> {
       ),
       body: Column(
         children: [
-          // BOTÕES DE FILTRO VOLTARAM! (Todos / Pendentes / Comprados)
+
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
             child: Row(
@@ -282,12 +279,12 @@ class _ListaComprasScreenState extends State<ListaComprasScreen> {
               }).toList(),
             ),
           ),
-          // Lista de itens filtrada ou mensagem vazia
+
           Expanded(
             child: _itensExibidos.isEmpty
                 ? const Center(
                     child: Text(
-                      'Nenhum item por aqui! 🥩',
+                      'Nenhum item foi registrado!',
                       style: TextStyle(fontSize: 16, color: Colors.grey),
                     ),
                   )
